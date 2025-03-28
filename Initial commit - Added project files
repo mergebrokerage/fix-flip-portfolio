@@ -1,0 +1,70 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+export default function FlipPortfolioManager() {
+  const [deals, setDeals] = useState([]);
+  const [newDeal, setNewDeal] = useState({
+    address: "",
+    purchaseDate: "",
+    rehabCost: "",
+    salePrice: "",
+  });
+
+  const addDeal = () => {
+    setDeals([...deals, newDeal]);
+    setNewDeal({ address: "", purchaseDate: "", rehabCost: "", salePrice: "" });
+  };
+
+  return (
+    <div className="p-6 bg-gray-900 text-white min-h-screen">
+      <h1 className="text-3xl font-bold mb-6">Fix & Flip Portfolio Manager</h1>
+      <Card className="bg-gray-800 p-4 mb-6">
+        <CardContent>
+          <h2 className="text-xl mb-4">Add a New Flip</h2>
+          <Input
+            placeholder="Property Address"
+            value={newDeal.address}
+            onChange={(e) => setNewDeal({ ...newDeal, address: e.target.value })}
+            className="mb-2"
+          />
+          <Input
+            placeholder="Purchase Date"
+            type="date"
+            value={newDeal.purchaseDate}
+            onChange={(e) => setNewDeal({ ...newDeal, purchaseDate: e.target.value })}
+            className="mb-2"
+          />
+          <Input
+            placeholder="Rehab Cost ($)"
+            type="number"
+            value={newDeal.rehabCost}
+            onChange={(e) => setNewDeal({ ...newDeal, rehabCost: e.target.value })}
+            className="mb-2"
+          />
+          <Input
+            placeholder="Sale Price ($)"
+            type="number"
+            value={newDeal.salePrice}
+            onChange={(e) => setNewDeal({ ...newDeal, salePrice: e.target.value })}
+            className="mb-2"
+          />
+          <Button onClick={addDeal} className="bg-blue-500 hover:bg-blue-600">Add Flip</Button>
+        </CardContent>
+      </Card>
+
+      <h2 className="text-2xl mb-4">Your Portfolio</h2>
+      {deals.map((deal, index) => (
+        <Card key={index} className="bg-gray-800 p-4 mb-4">
+          <CardContent>
+            <p><strong>Address:</strong> {deal.address}</p>
+            <p><strong>Purchase Date:</strong> {deal.purchaseDate}</p>
+            <p><strong>Rehab Cost:</strong> ${deal.rehabCost}</p>
+            <p><strong>Sale Price:</strong> ${deal.salePrice}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
